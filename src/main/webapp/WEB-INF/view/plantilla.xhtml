@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <!--bootstrap y tal-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <h:outputStylesheet library="css" name="cssLayout.css" />
+        <h:outputStylesheet library="css" name="default.css" />
+    </h:head>
+
+    <h:body>
+
+        <div id="top">
+            <ui:insert name="top">
+                 <div class="card">
+                    <h:form>
+                        <p:growl id="messages" showDetail="false"/>
+                        <p:menu>     
+                            <p:submenu label="Empleados">
+                                <p:menuitem value="Alta" action="{menuMB.alta}" update="messages" icon="fa fa-user-plus"/>
+                                <p:menuitem value="Baja" action="{menuMB.baja}" update="messages" icon="fa fa-user-times"/>
+                                <p:menuitem value="Modificar" action="{menuMB.mod}" update="messages" icon="fa fa-edit"/>
+                            </p:submenu>
+                            <p:submenu label="Ver listado">
+                                <p:menuitem value="Horarios" action="{menuMB.horarios}" update="messages" ajax="false"
+                                            icon="fa fa-clock-o"/>
+                                <p:menuitem value="Empleados" action="{menuMB.empleados}" update="messages" ajax="false"
+                                            icon="fa fa-users"/>
+                            </p:submenu>
+                            <p:submenu label="Cuenta">
+                                <p:menuitem value="Información" action="{menuMB.info}" icon="pi pi-home"/>
+                                <p:menuitem value="Logout" action="{menuMB.logout}" icon="pi pi-star"/>
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+                </div>
+            </ui:insert>
+        </div>
+
+        <div id="content" class="center_content">
+            <ui:insert name="content">
+                <!--contenido, en principio nada-->
+                
+            </ui:insert>
+        </div>
+
+        <div id="bottom">
+            <ui:insert name="bottom">
+                <!--footer-->
+                
+                
+            </ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

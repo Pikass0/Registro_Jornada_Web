@@ -12,6 +12,7 @@ CREATE TABLE Empleados
 ;
 CREATE TABLE Registros
     (Id_registro INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+    PRIMARY KEY (Id_registro),
     Id_empleado INT NOT NULL,
     Dia DATE NOT NULL,
     Check_in TIME,
