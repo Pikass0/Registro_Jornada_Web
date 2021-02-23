@@ -5,6 +5,7 @@
  */
 package com.c2b.jornadas.web;
 
+import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -16,7 +17,7 @@ import javax.inject.Named;
  */
 @Named(value = "menuMB")
 @ViewScoped
-public class MenuMB {
+public class MenuMB implements Serializable{
 
     /**
      * Creates a new instance of MenuMB
@@ -25,15 +26,16 @@ public class MenuMB {
     }
     
     
-    public void alta() {
-        addMessage("Success", "prueba mensaje");
+    public String alta() {
+        return "alta";
+
     }
 
     public void baja() {
         addMessage("Success", "prueba mensaje");
     }
 
-    public void mod() {
+    public void modif() {
         addMessage("Success", "prueba mensaje");
     }
     public void horarios() {
@@ -48,6 +50,7 @@ public class MenuMB {
     public void logout() {
         addMessage("Success", "prueba mensaje");
     }
+    
 
     public void addMessage(String summary, String detail) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);

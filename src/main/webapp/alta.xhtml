@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="./WEB-INF/view/plantilla.xhtml">
+
+            <ui:define name="titulo">
+                alta y modificación
+            </ui:define>
+            <ui:define name="top">
+            </ui:define>
+
+            <ui:define name="content">
+                <h2>Login</h2>
+                <div class="container">
+                    <h:form id="formAlta">
+                        <div class="p-field p-grid">
+                            <label for="firstname" class="p-col-fixed" style="width:100px">Nombre</label>
+                            <div class="p-col">
+                                <p:inputText id="firstname" type="text" value="#{empleadoMB.empleado.nombre}" />
+                            </div>
+                        </div>
+                        <div class="p-field p-grid">
+                            <label for="lastname" class="p-col-fixed" style="width:100px">Apellidos</label>
+                            <div class="p-col">
+                                <p:inputText id="lastname" type="text" value="#{empleadoMB.empleado.apellidos}"/>
+                            </div>
+                        </div>
+                        <div class="p-field p-grid">
+                            <label for="dni" class="p-col-fixed" style="width:100px">DNI</label>
+                            <div class="p-col">
+                                <p:inputText id="dni" type="text" value="#{empleadoMB.empleado.dni}"/>
+                            </div>
+                        </div>
+                        <div class="p-field p-grid">
+                            <label for="email" class="p-col-fixed" style="width:100px">E-mail</label>
+                            <div class="p-col">
+                                <p:inputText id="email" type="text" value="#{empleadoMB.empleado.email}" />
+                            </div>
+                        </div>
+                        <div class="p-field p-grid">
+                            <label for="password" class="p-col-fixed" style="width:100px">Contraseña</label>
+                            <div class="p-col">
+                                <p:inputText id="password" type="text" label="c2b1234" value="#{empleadoMB.empleado.password}"/>
+                            </div>
+                        </div>
+                        <div class="p-field p-grid">
+                            <label for="jornada" class="p-col-fixed" style="width:100px">Jornada</label>
+                            <div class="p-col">
+                                <p:inputText id="jornada" type="number" label="40" value="#{empleadoMB.empleado.jornadaSemanal}"/>
+                            </div>
+                        </div>
+                        <div class="p-field-checkbox">
+                            <Checkbox id="admin" name="admin" value="#{empleadoMB.empleado.administrador}" v-model="admin" />
+                            <label for="admin">Administrador</label>
+                        </div>
+
+                        <h:commandButton value="Login" action="#{empleadoMB.alta()}" />
+                    </h:form>
+                </div>
+            </ui:define>
+
+            <ui:define name="bottom">
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

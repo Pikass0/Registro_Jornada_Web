@@ -143,7 +143,7 @@ public class Empleado implements Serializable {
         this.password = password;
     }
 
-    public Boolean getActivo() {
+    public Boolean isActivo() {
         return activo;
     }
 
@@ -151,7 +151,7 @@ public class Empleado implements Serializable {
         this.activo = activo;
     }
 
-    public Boolean getAdministrador() {
+    public Boolean isAdministrador() {
         return administrador;
     }
 

@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -21,43 +22,46 @@
 
         <div id="top">
             <ui:insert name="top">
-                 <div class="card">
-                    <h:form>
-                        <p:growl id="messages" showDetail="false"/>
-                        <p:menu>     
-                            <p:submenu label="Empleados">
-                                <p:menuitem value="Alta" action="{menuMB.alta}" update="messages" icon="fa fa-user-plus"/>
-                                <p:menuitem value="Baja" action="{menuMB.baja}" update="messages" icon="fa fa-user-times"/>
-                                <p:menuitem value="Modificar" action="{menuMB.mod}" update="messages" icon="fa fa-edit"/>
-                            </p:submenu>
-                            <p:submenu label="Ver listado">
-                                <p:menuitem value="Horarios" action="{menuMB.horarios}" update="messages" ajax="false"
-                                            icon="fa fa-clock-o"/>
-                                <p:menuitem value="Empleados" action="{menuMB.empleados}" update="messages" ajax="false"
-                                            icon="fa fa-users"/>
-                            </p:submenu>
-                            <p:submenu label="Cuenta">
-                                <p:menuitem value="Información" action="{menuMB.info}" icon="pi pi-home"/>
-                                <p:menuitem value="Logout" action="{menuMB.logout}" icon="pi pi-star"/>
-                            </p:submenu>
-                        </p:menu>
-                    </h:form>
-                </div>
+
             </ui:insert>
         </div>
 
         <div id="content" class="center_content">
-            <ui:insert name="content">
-                <!--contenido, en principio nada-->
-                
+            <div class="card menu">
+                <h:form>
+                    <p:growl id="messages" showDetail="false"/>
+                     <c:if test="#{empleadoMB.usuarioLogueado != null}">
+                                #{empleadoMB.usuarioLogueado.nombre}
+                            </c:if>
+                    <p:menu>     
+                        <p:submenu label="Empleados">
+                            <p:menuitem value="Alta" action="#{menuMB.alta()}" update="messages" icon="fa fa-user-plus"/>
+                            <p:menuitem value="Baja" action="#{menuMB.baja()}" update="messages" icon="fa fa-user-times"/>
+                            <p:menuitem value="Modificar" action="#{menuMB.modif()}" update="messages" icon="fa fa-edit"/>
+                        </p:submenu>
+                        <p:submenu label="Ver listado">
+                            <p:menuitem value="Horarios" action="#{menuMB.horarios()}" update="messages" ajax="false"
+                                        icon="fa fa-clock-o"/>
+                            <p:menuitem value="Empleados" action="#{menuMB.empleados()}" update="messages" ajax="false"
+                                        icon="fa fa-users"/>
+                        </p:submenu>    
+                        <p:submenu label="Cuenta">
+                            <p:menuitem value="Información" action="#{menuMB.info()}" icon="pi pi-home"/>
+                            <p:menuitem value="Logout" action="#{empleadoMB.logout()}" icon="pi pi-star"/>
+                        </p:submenu>
+                    </p:menu>
+                </h:form>
+            </div>
+
+            <ui:insert name="content">  
             </ui:insert>
         </div>
 
         <div id="bottom">
             <ui:insert name="bottom">
                 <!--footer-->
-                
-                
+
+
             </ui:insert>
         </div>
 
