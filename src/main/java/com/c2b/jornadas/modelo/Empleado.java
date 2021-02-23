@@ -32,6 +32,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Empleado.findAll", query = "SELECT e FROM Empleado e"),
+    @NamedQuery(name = "Empleado.findByNombreApellidosDni", 
+            query = "SELECT e FROM Empleados e "
+                    + "WHERE lower(i.nombre) like CONCAT('%',:nombre,'%') AND "
+                    + "lower(i.apellidos) like CONCAT('%',:apellidos,'%') AND  "
+                    + "lower(i.dni) like CONCAT('%',:dni,'%')"),
     @NamedQuery(name = "Empleado.findByIdEmpleado", query = "SELECT e FROM Empleado e WHERE e.idEmpleado = :idEmpleado"),
     @NamedQuery(name = "Empleado.findByDni", query = "SELECT e FROM Empleado e WHERE e.dni = :dni"),
     @NamedQuery(name = "Empleado.findByNombre", query = "SELECT e FROM Empleado e WHERE e.nombre = :nombre"),
@@ -143,7 +148,7 @@ public class Empleado implements Serializable {
         this.password = password;
     }
 
-    public Boolean isActivo() {
+    public Boolean getActivo() {
         return activo;
     }
 
@@ -151,7 +156,7 @@ public class Empleado implements Serializable {
         this.activo = activo;
     }
 
-    public Boolean isAdministrador() {
+    public Boolean getAdministrador() {
         return administrador;
     }
 

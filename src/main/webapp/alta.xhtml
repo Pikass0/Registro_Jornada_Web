@@ -24,45 +24,44 @@
                         <div class="p-field p-grid">
                             <label for="firstname" class="p-col-fixed" style="width:100px">Nombre</label>
                             <div class="p-col">
-                                <p:inputText id="firstname" type="text" value="#{empleadoMB.empleado.nombre}" />
+                                <p:inputText id="firstname" type="text"  required="true" value="#{empleadoMB.empleado.nombre}" />
                             </div>
                         </div>
                         <div class="p-field p-grid">
                             <label for="lastname" class="p-col-fixed" style="width:100px">Apellidos</label>
                             <div class="p-col">
-                                <p:inputText id="lastname" type="text" value="#{empleadoMB.empleado.apellidos}"/>
+                                <p:inputText id="lastname" type="text"  required="true" value="#{empleadoMB.empleado.apellidos}"/>
                             </div>
                         </div>
                         <div class="p-field p-grid">
                             <label for="dni" class="p-col-fixed" style="width:100px">DNI</label>
                             <div class="p-col">
-                                <p:inputText id="dni" type="text" value="#{empleadoMB.empleado.dni}"/>
+                                <p:inputText id="dni" type="text"  required="true" value="#{empleadoMB.empleado.dni}"/>
                             </div>
                         </div>
                         <div class="p-field p-grid">
                             <label for="email" class="p-col-fixed" style="width:100px">E-mail</label>
                             <div class="p-col">
-                                <p:inputText id="email" type="text" value="#{empleadoMB.empleado.email}" />
+                                <p:inputText id="email" type="text"  value="#{empleadoMB.empleado.email}" />
                             </div>
                         </div>
                         <div class="p-field p-grid">
                             <label for="password" class="p-col-fixed" style="width:100px">Contraseña</label>
                             <div class="p-col">
-                                <p:inputText id="password" type="text" label="c2b1234" value="#{empleadoMB.empleado.password}"/>
+                                <p:inputText id="password" type="text"  required="true" label="c2b1234" value="#{empleadoMB.empleado.password}"/>
                             </div>
                         </div>
                         <div class="p-field p-grid">
                             <label for="jornada" class="p-col-fixed" style="width:100px">Jornada</label>
                             <div class="p-col">
-                                <p:inputText id="jornada" type="number" label="40" value="#{empleadoMB.empleado.jornadaSemanal}"/>
+                                <p:inputText id="jornada" type="number" required="true"  label="40" value="#{empleadoMB.empleado.jornadaSemanal}"/>
                             </div>
                         </div>
                         <div class="p-field-checkbox">
-                            <Checkbox id="admin" name="admin" value="#{empleadoMB.empleado.administrador}" v-model="admin" />
-                            <label for="admin">Administrador</label>
+                            <p:selectBooleanCheckbox value="#{empleadoMB.empleado.administrador}" itemLabel="Administrador"/>
                         </div>
 
-                        <h:commandButton value="Login" action="#{empleadoMB.alta()}" />
+                        <h:commandButton value="Alta" action="#{empleadoMB.altaMod()}" />
                     </h:form>
                 </div>
             </ui:define>

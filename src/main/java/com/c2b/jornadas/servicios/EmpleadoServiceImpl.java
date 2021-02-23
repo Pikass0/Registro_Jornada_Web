@@ -4,6 +4,8 @@ package com.c2b.jornadas.servicios;
 import com.c2b.jornadas.excepciones.EmpleadoException;
 import com.c2b.jornadas.modelo.Empleado;
 import java.util.Collection;
+import java.util.List;
+import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,8 +32,17 @@ public class EmpleadoServiceImpl implements EmpleadoService {
     }
 
     @Override
-    public void alta(Empleado empNuevo) {
-       em.persist(empNuevo);
+    public void alta(Empleado empNuevo) throws EmpleadoException{
+        try{
+            em.persist(empNuevo);
+        }
+        catch(EJBException e){
+            throw new EmpleadoException("El empleado ya existe");
+        }//todo no consigo atrapar la excepcion cuando alguien ya existe
+        catch(Exception e){
+            throw new EmpleadoException("Error al intentar dar de alta. " + e.getMessage());
+        }
+       
     }
 
     @Override
@@ -96,7 +107,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
         
         try{
             Empleado eEncontrado = getEmpleadoByDNI(dni);
-            if (eEncontrado.getPassword().equals(clave) && eEncontrado.isAdministrador()) {
+            if (eEncontrado.getPassword().equals(clave) && eEncontrado.getAdministrador()) {
                 sesion.setAttribute("usuario", eEncontrado);
                 return eEncontrado;
             } 
@@ -114,6 +125,41 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 //    public void logout(Sess) throws EmpleadoException {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
+
+    @Override
+    public Collection<Empleado> buscarEmploadoPorCriterio(String nombre, String apellidos, String dni) throws EmpleadoException {
+        Query query = em.createNamedQuery("Empleado.findByNombreApellidosDni");
+        if (nombre == null) {
+            nombre = "%";
+        }else{
+            nombre = nombre.toLowerCase();
+        }
+        if (apellidos == null) {
+            apellidos = "%";
+        }else{
+            apellidos = apellidos.toLowerCase();
+        }
+        if (dni == null) {
+            dni = "%";
+        }else{
+            dni = dni.toLowerCase();
+        }
+        
+        query.setParameter("nombre", nombre);
+        query.setParameter("apellidos", apellidos);
+        query.setParameter("dni", dni);
+        
+        
+        query.setMaxResults(10);
+        
+        List<Empleado> empleados = query.getResultList();
+        
+        if (empleados == null || empleados.isEmpty()) {
+            throw new EmpleadoException("info_busqueda_no_resultados");
+        }
+        
+        return empleados;
+    }
 
     
     

@@ -7,6 +7,7 @@ package com.c2b.jornadas.web;
 
 import java.io.Serializable;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -19,6 +20,9 @@ import javax.inject.Named;
 @ViewScoped
 public class MenuMB implements Serializable{
 
+        //como uso alta.xhtml para alta/mod, esta variable me dira si estoy editando
+    private boolean modificar;
+
     /**
      * Creates a new instance of MenuMB
      */
@@ -27,6 +31,7 @@ public class MenuMB implements Serializable{
     
     
     public String alta() {
+        modificar = false;
         return "alta";
 
     }
@@ -36,6 +41,7 @@ public class MenuMB implements Serializable{
     }
 
     public void modif() {
+        modificar = true;
         addMessage("Success", "prueba mensaje");
     }
     public void horarios() {
@@ -56,4 +62,14 @@ public class MenuMB implements Serializable{
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+
+    public boolean isModificar() {
+        return modificar;
+    }
+
+    public void setModificar(boolean modificar) {
+        this.modificar = modificar;
+    }
+    
+    
 }

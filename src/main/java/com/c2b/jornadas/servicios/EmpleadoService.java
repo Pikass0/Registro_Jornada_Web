@@ -11,8 +11,9 @@ import javax.servlet.http.HttpSession;
 public interface EmpleadoService {
     
     public  Empleado getEmpleado(int id) throws EmpleadoException;
-    public void alta(Empleado empNuevo);
+    public void alta(Empleado empNuevo) throws EmpleadoException;
     public Collection<Empleado> getAllEmpleados();
+    public Collection<Empleado> buscarEmploadoPorCriterio(String nombre, String apellidos, String dni) throws EmpleadoException;
     public Empleado getEmpleadoByDNI(String email) throws EmpleadoException;
     public void borrar(int id) throws EmpleadoException;
     public void modificar(Empleado empleado) throws EmpleadoException;

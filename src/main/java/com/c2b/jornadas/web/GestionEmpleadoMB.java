@@ -6,33 +6,50 @@ import com.c2b.jornadas.servicios.EmpleadoService;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 @Named(value = "empleadoMB")
 @SessionScoped
-public class EmpleadoMB implements Serializable {
+public class GestionEmpleadoMB implements Serializable {
 
+    //atributos empleado/usuario
     private Empleado usuarioLogueado;
-    private Empleado empleado;
+    private Empleado empleado;//para alta/mod
+    private Empleado empleadoBuscar;//para baja
     private String inputDni;
     private String inputClave;
+    private List<Empleado> listaEmpleados;
+    private List<Empleado> empleadosEncontrados;
 
-    private Date fechaHoy = new Date();
-    private double precio = 33.2;
+    //para saber si viene de alta o mod
+    @ManagedProperty(value = "#{menuMB.modificar}")
+    private boolean modificar;
 
     @EJB
     private EmpleadoService servicio;
 
     private static Logger log = Logger.getLogger("EmpleadoManagedBean");
 
-    public EmpleadoMB() {
+    public GestionEmpleadoMB() {
         usuarioLogueado = new Empleado();
+        empleadoBuscar = new Empleado();
+        empleado = new Empleado();
+        listaEmpleados = new ArrayList<>();
+        empleadosEncontrados = new ArrayList<>();
+    }
+
+    @PostConstruct
+    public void init() {
+
     }
 
     public void guardarCambios() {
@@ -43,7 +60,38 @@ public class EmpleadoMB implements Serializable {
         }
     }
 
-    public String login() {
+
+    public void buscar(){
+         try {
+            empleadosEncontrados = (List<Empleado>) servicio.buscarEmploadoPorCriterio(empleadoBuscar.getNombre(),
+                    empleadoBuscar.getApellidos(), empleadoBuscar.getDni());
+            
+        } catch (EmpleadoException ex) {
+            Logger.getLogger(EmpleadoException.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void altaMod() {
+        try {
+
+            if (modificar) {
+
+            } else {
+                //alta
+                servicio.alta(empleado);
+            }
+
+        } catch (EmpleadoException ex) {
+            addMessage("error", ex.getMessage());
+            log.log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void addMessage(String summary, String detail) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+        public String login() {
         // BD - ir a buscar usuario y claeveç
         System.out.printf("login %s   y clave %s", inputDni, inputClave);
 
@@ -64,23 +112,17 @@ public class EmpleadoMB implements Serializable {
             ctx.addMessage(null, msg);
             return "login";
         }
-
     }
 
     public String logout() {
         FacesContext ctx = FacesContext.getCurrentInstance();
         HttpSession sesion = (HttpSession) ctx.getExternalContext().getSession(true);
         sesion.invalidate();
-        
+
         usuarioLogueado = null;
 
         return "login";
     }
-    
-    public void alta(){
-        
-    }
-
     //GET/SET
 
     public Empleado getUsuarioLogueado() {
@@ -98,8 +140,7 @@ public class EmpleadoMB implements Serializable {
     public void setEmpleado(Empleado empleado) {
         this.empleado = empleado;
     }
-    
-    
+
     public String getInputClave() {
         return inputClave;
     }
@@ -116,18 +157,29 @@ public class EmpleadoMB implements Serializable {
         this.inputDni = dni;
     }
 
-    public Date getFecha() {
-        return fechaHoy;
+    public List<Empleado> getListaEmpleados() {
+        return listaEmpleados;
     }
 
-
-    public double getPrecio() {
-        return precio;
+    public void setListaEmpleados(List<Empleado> listaEmpleados) {
+        this.listaEmpleados = listaEmpleados;
     }
 
-    public void setPrecio(double precio) {
-        this.precio = precio;
+    public List<Empleado> getEmpleadosEncontrados() {
+        return empleadosEncontrados;
     }
 
+    public void setEmpleadosEncontrados(List<Empleado> empleadosEncontrados) {
+        this.empleadosEncontrados = empleadosEncontrados;
+    }
+
+    public Empleado getEmpleadoBuscar() {
+        return empleadoBuscar;
+    }
+
+    public void setEmpleadoBuscar(Empleado empleadoBuscar) {
+        this.empleadoBuscar = empleadoBuscar;
+    }
+    
 
 }

@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+
+    </h:head>
+    <h:body>
+
+        <ui:composition template="./WEB-INF/view/plantilla.xhtml">
+
+            <ui:define name="titulo">
+                inicio
+            </ui:define>
+
+            <ui:define name="top">
+                - INICIO
+            </ui:define>
+
+            <ui:define name="content">
+                <h2>Login</h2>
+
+                <div class="card">
+                    <h:form id="formBuscar" rendered="true">
+                        <h:outputText value="Buscar" styleClass="titulo"/>
+                        <br />
+                        Nombre
+                        <h:inputText value="#{empleadoMB.empleadoBuscar.nombre}" /> <br/>
+                        Apellidos
+                        <h:inputText value="#{empleadoMB.empleadoBuscar.apellidos}" /><br/>
+                        DNI
+                        <h:inputText value="#{empleadoMB.empleadoBuscar.dni}" /><br/>
+                        <h:commandButton value="Buscar" action="#{empleadoMB.buscar()}">
+                            <f:ajax event="click" render="tablaResultados" execute="@form"/> 
+                        </h:commandButton>
+                    </h:form>
+                    <!--TODO tabla resultados-->
+                    <p:dataTable id="tablaResultados" var="product" value="#{dtSelectionView.products6}"
+                                 selection="#{dtSelectionView.selectedProducts}" rowKey="#{product.id}"
+                                 style="margin-bottom:0" paginator="true" rows="5" >
+                        <!--selectionPageOnly="false"-->
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                        <p:column headerText="Code">
+                            <h:outputText value="#{product.code}" />
+                        </p:column>
+
+                        <p:column headerText="Name">
+                            <h:outputText value="#{product.name}" />
+                        </p:column>
+
+                        <p:column headerText="Category">
+                            <h:outputText value="#{product.category}" />
+                        </p:column>
+
+                        <p:column headerText="Quantity">
+                            <h:outputText value="#{product.quantity}" />
+                        </p:column>
+                    </p:dataTable>
+            </ui:define>
+
+            <ui:define name="bottom">
+
+            </ui:define>
+        </ui:composition>
+
+        </div>
+
+    </h:body>
+</html>
+
