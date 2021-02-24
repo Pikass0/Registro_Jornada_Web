@@ -19,9 +19,9 @@ import javax.inject.Named;
 @ViewScoped
 public class MenuMB implements Serializable{
 
-        //como uso alta.xhtml para alta/mod, esta variable me dira si estoy editando
-    private boolean modificar;
-
+    //para saber la view en la que estoy siempre
+    private String view = "login";
+    private boolean modificar = false;
     /**
      * Creates a new instance of MenuMB
      */
@@ -30,16 +30,20 @@ public class MenuMB implements Serializable{
     
     
     public String alta() {
+        view = "alta";
         modificar = false;
-        return "alta";
+        return view;
 
     }
 
     public String baja() {
-        return "baja";
+        view = "baja";
+        return view;
     }
 
+    
     public void modif() {
+        view = "modif";
         modificar = true;
         addMessage("Success", "prueba mensaje");
     }
@@ -69,6 +73,7 @@ public class MenuMB implements Serializable{
     public void setModificar(boolean modificar) {
         this.modificar = modificar;
     }
+
     
     
 }

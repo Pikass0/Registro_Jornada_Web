@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -31,18 +32,24 @@ public class BajaViewMB implements Serializable {
     private EmpleadoService servicio;
 
     private Empleado empleadoBuscar;
-    
+
     private List<Empleado> empleadosSeleccionados;
     private List<Empleado> empleadosEncontrados;
-    
-     private static Logger log = Logger.getLogger("BajaViewBean");
+
+    private static Logger log = Logger.getLogger("BajaViewBean");
 
     /**
      * Creates a new instance of DataTableMB
      */
     public BajaViewMB() {
-        empleadoBuscar  = new Empleado();
-//        empleadosEncontrados = new ArrayList<>();
+        empleadoBuscar = new Empleado();
+        //por defecto mostrar todos
+        empleadosEncontrados = new ArrayList<>();
+    }
+
+    @PostConstruct
+    public void init() {
+        empleadosEncontrados = (List<Empleado>) servicio.getAllEmpleados();
     }
 
     public void buscar() {
@@ -54,15 +61,20 @@ public class BajaViewMB implements Serializable {
             Logger.getLogger(EmpleadoException.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-      public void darBaja(boolean activo) {
+
+    public void darBaja(boolean activo) {
         log.log(Level.INFO, "paso por buscar");
         try {
-          servicio.baja(empleadosSeleccionados, activo);
+            servicio.baja(empleadosSeleccionados, activo);
 
         } catch (EmpleadoException ex) {
             Logger.getLogger(EmpleadoException.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void modif() {
+        
+       
     }
 
     public void onRowSelect(SelectEvent<Empleado> event) {
@@ -99,7 +111,5 @@ public class BajaViewMB implements Serializable {
     public void setEmpleadosSeleccionados(List<Empleado> empleadosSeleccionados) {
         this.empleadosSeleccionados = empleadosSeleccionados;
     }
-    
-    
 
 }

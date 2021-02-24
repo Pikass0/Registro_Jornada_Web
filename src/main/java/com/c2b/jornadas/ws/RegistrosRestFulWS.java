@@ -6,8 +6,6 @@ import com.c2b.jornadas.modelo.Registro;
 import com.c2b.jornadas.servicios.GestionRegistroService;
 import java.util.Collection;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
