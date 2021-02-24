@@ -72,9 +72,8 @@ public class BajaViewMB implements Serializable {
         }
     }
     
-    public void modif() {
+    public void modif(){
         
-       
     }
 
     public void onRowSelect(SelectEvent<Empleado> event) {

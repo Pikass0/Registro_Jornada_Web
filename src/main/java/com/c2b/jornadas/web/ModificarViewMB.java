@@ -23,4 +23,9 @@ public class ModificarViewMB implements Serializable{
     public ModificarViewMB() {
     }
     
+        public void modif() {
+        
+       
+    }
+    
 }
