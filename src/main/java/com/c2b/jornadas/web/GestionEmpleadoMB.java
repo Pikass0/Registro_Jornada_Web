@@ -24,11 +24,11 @@ public class GestionEmpleadoMB implements Serializable {
     //atributos empleado/usuario
     private Empleado usuarioLogueado;
     private Empleado empleado;//para alta/mod
-    private Empleado empleadoBuscar;//para baja
+
     private String inputDni;
     private String inputClave;
     private List<Empleado> listaEmpleados;
-    private List<Empleado> empleadosEncontrados;
+    
 
     //para saber si viene de alta o mod
     @ManagedProperty(value = "#{menuMB.modificar}")
@@ -41,10 +41,9 @@ public class GestionEmpleadoMB implements Serializable {
 
     public GestionEmpleadoMB() {
         usuarioLogueado = new Empleado();
-        empleadoBuscar = new Empleado();
         empleado = new Empleado();
         listaEmpleados = new ArrayList<>();
-        empleadosEncontrados = new ArrayList<>();
+        
     }
 
     @PostConstruct
@@ -61,15 +60,6 @@ public class GestionEmpleadoMB implements Serializable {
     }
 
 
-    public void buscar(){
-         try {
-            empleadosEncontrados = (List<Empleado>) servicio.buscarEmploadoPorCriterio(empleadoBuscar.getNombre(),
-                    empleadoBuscar.getApellidos(), empleadoBuscar.getDni());
-            
-        } catch (EmpleadoException ex) {
-            Logger.getLogger(EmpleadoException.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
     public void altaMod() {
         try {
@@ -165,21 +155,6 @@ public class GestionEmpleadoMB implements Serializable {
         this.listaEmpleados = listaEmpleados;
     }
 
-    public List<Empleado> getEmpleadosEncontrados() {
-        return empleadosEncontrados;
-    }
 
-    public void setEmpleadosEncontrados(List<Empleado> empleadosEncontrados) {
-        this.empleadosEncontrados = empleadosEncontrados;
-    }
-
-    public Empleado getEmpleadoBuscar() {
-        return empleadoBuscar;
-    }
-
-    public void setEmpleadoBuscar(Empleado empleadoBuscar) {
-        this.empleadoBuscar = empleadoBuscar;
-    }
-    
 
 }

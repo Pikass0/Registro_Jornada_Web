@@ -34,8 +34,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Registro.findAll", query = "SELECT r FROM Registro r"),
     @NamedQuery(name = "Registro.findByIdRegistro", query = "SELECT r FROM Registro r WHERE r.idRegistro = :idRegistro"),
     @NamedQuery(name = "Registro.findByDia", query = "SELECT r FROM Registro r WHERE r.dia = :dia"),
-    @NamedQuery(name = "Registro.findByCheckIn", query = "SELECT r FROM Registro r WHERE r.checkIn = :checkIn"),
-    @NamedQuery(name = "Registro.findByCheckOut", query = "SELECT r FROM Registro r WHERE r.checkOut = :checkOut")})
+    @NamedQuery(name = "Registro.findByIdEmpleado", query = "SELECT r FROM Registro r WHERE r.idEmpleado = :idEmpleado"),
+    @NamedQuery(name = "Registro.findJornadasNoFinalizadasEmpleado", 
+            query = "SELECT r FROM Registro r "
+                    + "WHERE r.idEmpleado = :idEmpleado AND "
+                    + "r.checkOut IS null AND "
+                    + "r.dia = :dia")})
 public class Registro implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -55,7 +59,13 @@ public class Registro implements Serializable {
     @Column(name = "CHECK_OUT")
     @Temporal(TemporalType.TIME)
     private Date checkOut;
-    @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO")
+    //-----------
+    @Column(name = "ID_EMPLEADO")
+    private Integer idEmpleado;
+    //cuando haga insert, solo usara el id, y no todo el empleado
+    @JoinColumn(name ="ID_EMPLEADO", referencedColumnName = "ID_EMPLEADO",
+            insertable = false, updatable = false)
+    //-----------
     @ManyToOne(optional = false)
     private Empleado empleado;
 
@@ -103,14 +113,22 @@ public class Registro implements Serializable {
         this.checkOut = checkOut;
     }
 
-    public Empleado getIdEmpleado() {
+    public Integer getIdEmpleado() {
+        return idEmpleado;
+    }
+
+    public void setIdEmpleado(Integer idEmpleado) {
+        this.idEmpleado = idEmpleado;
+    }
+
+      public Empleado getEmpleado() {
         return empleado;
     }
 
-    public void setIdEmpleado(Empleado idEmpleado) {
-        this.empleado = idEmpleado;
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;

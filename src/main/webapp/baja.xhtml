@@ -21,52 +21,49 @@
             </ui:define>
 
             <ui:define name="content">
-                <h2>Login</h2>
+                <h2>Buscar empleado</h2>
 
                 <div class="card">
                     <h:form id="formBuscar" rendered="true">
-                        <h:outputText value="Buscar" styleClass="titulo"/>
                         <br />
                         Nombre
-                        <h:inputText value="#{empleadoMB.empleadoBuscar.nombre}" /> <br/>
+                        <h:inputText value="#{bajaViewMB.empleadoBuscar.nombre}" /> <br/>
                         Apellidos
-                        <h:inputText value="#{empleadoMB.empleadoBuscar.apellidos}" /><br/>
+                        <h:inputText value="#{bajaViewMB.empleadoBuscar.apellidos}" /><br/>
                         DNI
-                        <h:inputText value="#{empleadoMB.empleadoBuscar.dni}" /><br/>
-                        <h:commandButton value="Buscar" action="#{empleadoMB.buscar()}">
+                        <h:inputText value="#{bajaViewMB.empleadoBuscar.dni}" /><br/>
+                        <h:commandButton value="Buscar" action="#{bajaViewMB.buscar()}">
                             <f:ajax event="click" render="tablaResultados" execute="@form"/> 
                         </h:commandButton>
+                        <br />
                     </h:form>
+                    <br />
                     <!--TODO tabla resultados-->
-                    <p:dataTable id="tablaResultados" var="product" value="#{dtSelectionView.products6}"
-                                 selection="#{dtSelectionView.selectedProducts}" rowKey="#{product.id}"
+                    <p:dataTable id="tablaResultados" var="empleado" value="#{bajaViewMB.empleadosEncontrados}"
+                                 selection="#{bajaViewMB.empleadosSeleccionados}" rowKey="#{empleado.idEmpleado}"
                                  style="margin-bottom:0" paginator="true" rows="5" >
                         <!--selectionPageOnly="false"-->
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column headerText="Code">
-                            <h:outputText value="#{product.code}" />
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{empleado.nombre}" />
                         </p:column>
 
-                        <p:column headerText="Name">
-                            <h:outputText value="#{product.name}" />
+                        <p:column headerText="Apellidos">
+                            <h:outputText value="#{empleado.apellidos}" />
                         </p:column>
 
-                        <p:column headerText="Category">
-                            <h:outputText value="#{product.category}" />
+                        <p:column headerText="DNI">
+                            <h:outputText value="#{empleado.dni}" />
                         </p:column>
 
-                        <p:column headerText="Quantity">
-                            <h:outputText value="#{product.quantity}" />
-                        </p:column>
                     </p:dataTable>
+                </div>
             </ui:define>
 
             <ui:define name="bottom">
 
             </ui:define>
         </ui:composition>
-
-        </div>
 
     </h:body>
 </html>

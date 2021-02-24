@@ -40,6 +40,10 @@
             <from-outcome>home</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>baja</from-outcome>
+            <to-view-id>/baja.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>/alta.xhtml</from-view-id>

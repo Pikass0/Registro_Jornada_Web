@@ -19,3 +19,6 @@ CREATE TABLE Registros
     Check_out TIME,
     FOREIGN KEY (Id_empleado) REFERENCES Empleados(Id_empleado))
 ;
+
+INSERT INTO empleados (DNI, NOMBRE, APELLIDOS, EMAIL, PASSWORD, JORNADA_SEMANAL) VALUES ('12312312L', 'Test', 'Testapellido', 't@c2b.com', '1234', 40);
+INSERT INTO REGISTROS (ID_EMPLEADO, DIA, CHECK_IN, CHECK_OUT) VALUES (1, '2020-02-11', '02:02:00', '09:02:00');

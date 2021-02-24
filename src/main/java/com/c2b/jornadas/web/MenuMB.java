@@ -7,7 +7,6 @@ package com.c2b.jornadas.web;
 
 import java.io.Serializable;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -36,8 +35,8 @@ public class MenuMB implements Serializable{
 
     }
 
-    public void baja() {
-        addMessage("Success", "prueba mensaje");
+    public String baja() {
+        return "baja";
     }
 
     public void modif() {
