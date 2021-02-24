@@ -1,6 +1,5 @@
 package com.c2b.jornadas.servicios;
 
-
 import com.c2b.jornadas.excepciones.EmpleadoException;
 import com.c2b.jornadas.modelo.Empleado;
 import java.util.Collection;
@@ -12,86 +11,88 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.servlet.http.HttpSession;
 
-
 //Es una sesion bean local
 @Stateless
 public class EmpleadoServiceImpl implements EmpleadoService {
-
+    
     @PersistenceContext(unitName = "JornadasPU")
-    private EntityManager em; 
-
-
-
+    private EntityManager em;    
+    
     @Override
     public Empleado getEmpleado(int id) throws EmpleadoException {
-       Empleado e = em.find(Empleado.class, id);
+        Empleado e = em.find(Empleado.class, id);
         if (e == null) {
             throw new EmpleadoException("No existe el empleado solicitado");
         }
         return e;
     }
-
+    
     @Override
-    public void alta(Empleado empNuevo) throws EmpleadoException{
-        try{
+    public void alta(Empleado empNuevo) throws EmpleadoException {
+        try {
             em.persist(empNuevo);
-        }
-        catch(EJBException e){
+        } catch (EJBException e) {
             throw new EmpleadoException("El empleado ya existe");
         }//todo no consigo atrapar la excepcion cuando alguien ya existe
-        catch(Exception e){
+        catch (Exception e) {
             throw new EmpleadoException("Error al intentar dar de alta. " + e.getMessage());
         }
-       
+        
     }
-
+    
+    @Override
+    public void baja(List<Empleado> empleados, boolean activo) throws EmpleadoException {
+        for (Empleado empleado : empleados) {
+            empleado.setActivo(activo);
+            em.merge(empleado);
+            
+        }
+    }
+    
     @Override
     public Collection<Empleado> getAllEmpleados() {
         Query query = em.createNamedQuery("Empleado.findAll");
-
+        
         return query.getResultList();
     }
-
+    
     @Override
     public Empleado getEmpleadoByDNI(String dni) throws EmpleadoException {
-       Query query = em.createNamedQuery("Empleado.findByDni");
+        Query query = em.createNamedQuery("Empleado.findByDni");
         query.setParameter("dni", dni);
         
-        try{
+        try {
             Empleado e = (Empleado) query.getSingleResult();
             return e;
             
-        }catch(javax.persistence.NoResultException e){
-            throw new EmpleadoException("No existe un empleado con ese dni "+ dni);
+        } catch (javax.persistence.NoResultException e) {
+            throw new EmpleadoException("No existe un empleado con ese dni " + dni);
         }
     }
-
+    
     @Override
     public void modificar(Empleado empleado) throws EmpleadoException {
-         //hace find y asi se sincroniza con el em con el commit que hace internamente
+        //hace find y asi se sincroniza con el em con el commit que hace internamente
         Empleado e = this.getEmpleado(empleado.getIdEmpleado());
-        if(e==null){
+        if (e == null) {
             throw new EmpleadoException("No se ha encontrado el empleado");
         }
         if (!empleado.getNombre().isEmpty()) {
             e.setNombre(empleado.getNombre());
-
+            
         }
-        if(!empleado.getEmail().isEmpty()){
+        if (!empleado.getEmail().isEmpty()) {
             e.setEmail(empleado.getEmail());
-
+            
         }
-        if(!empleado.getPassword().isEmpty()){
+        if (!empleado.getPassword().isEmpty()) {
             e.setPassword(empleado.getPassword());
-
+            
         }
-        
+
         //los metodos de un ejb hacen commit al final si no hay excepciones
         //COMMIT -> se sincronizan los objetos de em con las tablas de bd
-        
     }
-    
-    
     
     @Override
     public void borrar(int i) throws EmpleadoException {
@@ -101,23 +102,22 @@ public class EmpleadoServiceImpl implements EmpleadoService {
         }
         em.remove(e);
     }
-
+    
     @Override
     public Empleado login(String dni, String clave, HttpSession sesion) throws EmpleadoException {
         
-        try{
+        try {
             Empleado eEncontrado = getEmpleadoByDNI(dni);
             if (eEncontrado.getPassword().equals(clave) && eEncontrado.getAdministrador()) {
                 sesion.setAttribute("usuario", eEncontrado);
                 return eEncontrado;
-            } 
+            }
             //si no coincide la contra
             throw new EmpleadoException("La constraseña es incorrecta");
-        }catch(EmpleadoException e){
+        } catch (EmpleadoException e) {
             //si no lo ha encontrado
-             throw new EmpleadoException( e.getMessage());
+            throw new EmpleadoException(e.getMessage());
         }
-
         
     }
 
@@ -125,30 +125,16 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 //    public void logout(Sess) throws EmpleadoException {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
-
     @Override
-    public Collection<Empleado> buscarEmploadoPorCriterio(String nombre, String apellidos, String dni) throws EmpleadoException {
-        Query query = em.createNamedQuery("Empleado.findByNombreApellidosDni");
-        if (nombre == null) {
+    public Collection<Empleado> buscarEmploadoPorCriterio(String nombre) throws EmpleadoException {
+        Query query = em.createNamedQuery("Empleado.findByNombre2");
+        if (nombre == null || nombre.isEmpty()) {
             nombre = "%";
-        }else{
+        } else {
             nombre = nombre.toLowerCase();
-        }
-        if (apellidos == null) {
-            apellidos = "%";
-        }else{
-            apellidos = apellidos.toLowerCase();
-        }
-        if (dni == null) {
-            dni = "%";
-        }else{
-            dni = dni.toLowerCase();
         }
         
         query.setParameter("nombre", nombre);
-        query.setParameter("apellidos", apellidos);
-        query.setParameter("dni", dni);
-        
         
         query.setMaxResults(10);
         
@@ -160,11 +146,5 @@ public class EmpleadoServiceImpl implements EmpleadoService {
         
         return empleados;
     }
-
-    
-    
-    
-    
-    
     
 }

@@ -27,36 +27,42 @@
                     <h:form id="formBuscar" rendered="true">
                         <br />
                         Nombre
-                        <h:inputText value="#{bajaViewMB.empleadoBuscar.nombre}" /> <br/>
-                        Apellidos
-                        <h:inputText value="#{bajaViewMB.empleadoBuscar.apellidos}" /><br/>
-                        DNI
-                        <h:inputText value="#{bajaViewMB.empleadoBuscar.dni}" /><br/>
-                        <h:commandButton value="Buscar" action="#{bajaViewMB.buscar()}">
-                            <f:ajax event="click" render="tablaResultados" execute="@form"/> 
+                        <h:inputText value="#{bajaViewMB.empleadoBuscar.nombre}"/> <br/>
+                        <h:commandButton  value="Buscar" action="#{bajaViewMB.buscar()}">
+                            <f:ajax event="click" render="formTabla" execute="@form"/> 
                         </h:commandButton>
                         <br />
                     </h:form>
                     <br />
                     <!--TODO tabla resultados-->
-                    <p:dataTable id="tablaResultados" var="empleado" value="#{bajaViewMB.empleadosEncontrados}"
-                                 selection="#{bajaViewMB.empleadosSeleccionados}" rowKey="#{empleado.idEmpleado}"
-                                 style="margin-bottom:0" paginator="true" rows="5" >
-                        <!--selectionPageOnly="false"-->
-                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column headerText="Nombre">
-                            <h:outputText value="#{empleado.nombre}" />
-                        </p:column>
+                    <h:form id="formTabla" rendered="true">
+                        <p:dataTable id="tablaResultados" var="empleado" value="#{bajaViewMB.empleadosEncontrados}"
+                                     selection="#{bajaViewMB.empleadosSeleccionados}" rowKey="#{empleado.idEmpleado}"
+                                     style="margin-bottom:0" paginator="true" rows="5" >
+                            <!--selectionPageOnly="false"-->
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                            <p:column headerText="Nombre">
+                                <h:outputText value="#{empleado.nombre}" />
+                            </p:column>
 
-                        <p:column headerText="Apellidos">
-                            <h:outputText value="#{empleado.apellidos}" />
-                        </p:column>
+                            <p:column headerText="Apellidos">
+                                <h:outputText value="#{empleado.apellidos}" />
+                            </p:column>
 
-                        <p:column headerText="DNI">
-                            <h:outputText value="#{empleado.dni}" />
-                        </p:column>
-
-                    </p:dataTable>
+                            <p:column headerText="DNI">
+                                <h:outputText value="#{empleado.dni}" />
+                            </p:column>
+                            <p:column headerText="Alta">
+                                <h:outputText value="#{empleado.activo}" />
+                            </p:column>
+                        </p:dataTable>
+                        <h:commandButton  value="Dar de baja" action="#{bajaViewMB.darBaja(false)}">
+                            <f:ajax event="click" render="formTabla" execute="@form"/> 
+                        </h:commandButton>
+                        <h:commandButton  value="Dar de alta" action="#{bajaViewMB.darBaja(true)}">
+                            <f:ajax event="click" render="formTabla" execute="@form"/> 
+                        </h:commandButton>
+                    </h:form>
                 </div>
             </ui:define>
 

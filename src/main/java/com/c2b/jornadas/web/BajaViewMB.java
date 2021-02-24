@@ -34,19 +34,31 @@ public class BajaViewMB implements Serializable {
     
     private List<Empleado> empleadosSeleccionados;
     private List<Empleado> empleadosEncontrados;
+    
+     private static Logger log = Logger.getLogger("BajaViewBean");
 
     /**
      * Creates a new instance of DataTableMB
      */
     public BajaViewMB() {
         empleadoBuscar  = new Empleado();
-        empleadosEncontrados = new ArrayList<>();
+//        empleadosEncontrados = new ArrayList<>();
     }
 
     public void buscar() {
+        log.log(Level.INFO, "paso por buscar");
         try {
-            empleadosEncontrados = (List<Empleado>) servicio.buscarEmploadoPorCriterio(empleadoBuscar.getNombre(),
-                    empleadoBuscar.getApellidos(), empleadoBuscar.getDni());
+            empleadosEncontrados = (List<Empleado>) servicio.buscarEmploadoPorCriterio(empleadoBuscar.getNombre());
+
+        } catch (EmpleadoException ex) {
+            Logger.getLogger(EmpleadoException.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+      public void darBaja(boolean activo) {
+        log.log(Level.INFO, "paso por buscar");
+        try {
+          servicio.baja(empleadosSeleccionados, activo);
 
         } catch (EmpleadoException ex) {
             Logger.getLogger(EmpleadoException.class.getName()).log(Level.SEVERE, null, ex);
