@@ -10,13 +10,20 @@ import com.c2b.jornadas.modelo.Empleado;
 import com.c2b.jornadas.servicios.EmpleadoService;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import org.primefaces.PrimeFaces;
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
+
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
@@ -24,14 +31,16 @@ import org.primefaces.event.UnselectEvent;
  *
  * @author user
  */
-@Named(value = "bajaViewMB")
+@Named(value = "buscarViewMB")
 @ViewScoped
-public class BajaViewMB implements Serializable {
+public class BuscarViewMB implements Serializable {
 
     @EJB
     private EmpleadoService servicio;
 
+    private Empleado empleadoEditar;
     private Empleado empleadoBuscar;
+    private boolean extra = true;
 
     private List<Empleado> empleadosSeleccionados;
     private List<Empleado> empleadosEncontrados;
@@ -41,7 +50,7 @@ public class BajaViewMB implements Serializable {
     /**
      * Creates a new instance of DataTableMB
      */
-    public BajaViewMB() {
+    public BuscarViewMB() {
         empleadoBuscar = new Empleado();
         //por defecto mostrar todos
         empleadosEncontrados = new ArrayList<>();
@@ -53,27 +62,41 @@ public class BajaViewMB implements Serializable {
     }
 
     public void buscar() {
-        log.log(Level.INFO, "paso por buscar");
+
         try {
             empleadosEncontrados = (List<Empleado>) servicio.buscarEmploadoPorCriterio(empleadoBuscar.getNombre());
-
+            log.log(Level.INFO, "busco");
         } catch (EmpleadoException ex) {
             Logger.getLogger(EmpleadoException.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void darBaja(boolean activo) {
-        log.log(Level.INFO, "paso por buscar");
+
         try {
             servicio.baja(empleadosSeleccionados, activo);
-
+            log.log(Level.INFO, "doy de baja");
         } catch (EmpleadoException ex) {
             Logger.getLogger(EmpleadoException.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void modif(){
-        
+
+    public void switchExtra() {
+        extra = !extra;
+        log.log(Level.INFO, "cambio extra");
+    }
+
+    public void modif() {
+
+        try {
+            for (Empleado e : empleadosEncontrados) {
+                log.log(Level.INFO, e.getApellidos());
+                servicio.modificar(e);
+            }
+        } catch (EmpleadoException ex) {
+            log.log(Level.SEVERE, null, ex);
+        }
+
     }
 
     public void onRowSelect(SelectEvent<Empleado> event) {
@@ -85,6 +108,34 @@ public class BajaViewMB implements Serializable {
         Empleado eSeleccionado = event.getObject();
         empleadosSeleccionados.remove(eSeleccionado);
 
+    }
+
+    public void onRowEdit(RowEditEvent<Empleado> event) {
+
+    }
+
+    public void onRowCancel(RowEditEvent<Empleado> event) {
+
+    }
+
+    public void onCellEdit(CellEditEvent event) {
+
+    }
+
+    public boolean isExtra() {
+        return extra;
+    }
+
+    public void setExtra(boolean extra) {
+        this.extra = extra;
+    }
+
+    public Empleado getEmpleadoSeleccionado() {
+        return empleadoEditar;
+    }
+
+    public void setEmpleadoSeleccionado(Empleado empleadoSeleccionado) {
+        this.empleadoEditar = empleadoSeleccionado;
     }
 
     public List<Empleado> getEmpleadosEncontrados() {

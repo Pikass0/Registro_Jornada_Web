@@ -3,13 +3,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
+        <title>Facelet Title</title>
     </h:head>
     <h:body>
-
-        <ui:composition template="./WEB-INF/view/plantilla.xhtml">
+          <ui:composition template="./WEB-INF/view/plantilla.xhtml">
 
             <ui:define name="titulo">
                 
@@ -19,53 +18,50 @@
             </ui:define>
 
             <ui:define name="content">
-                Alta
-            <!--<c:otherwise>
-                    Modificar
-                </c:otherwise>-->
+                Modificar
                 <div class="container">
                     <h:form id="formAlta">
                         <div class="p-field p-grid">
                             <label for="firstname" class="p-col-fixed" style="width:100px">Nombre</label>
                             <div class="p-col">
-                                <p:inputText id="firstname" type="text"  required="true" value="#{empleadoMB.empleado.nombre}" />
+                                <p:inputText id="firstname" type="text"  required="true" value="#{buscarViewMB.empleadoEditar.nombre}" />
                             </div>
                         </div>
                         <div class="p-field p-grid">
                             <label for="lastname" class="p-col-fixed" style="width:100px">Apellidos</label>
                             <div class="p-col">
-                                <p:inputText id="lastname" type="text"  required="true" value="#{empleadoMB.empleado.apellidos}"/>
+                                <p:inputText id="lastname" type="text"  required="true" value="#{buscarViewMB.empleadoEditar.apellidos}"/>
                             </div>
                         </div>
                         <div class="p-field p-grid">
                             <label for="dni" class="p-col-fixed" style="width:100px">DNI</label>
                             <div class="p-col">
-                                <p:inputText id="dni" type="text"  required="true" value="#{empleadoMB.empleado.dni}"/>
+                                <p:inputText id="dni" type="text"  required="true" value="#{buscarViewMB.empleadoEditar.dni}"/>
                             </div>
                         </div>
                         <div class="p-field p-grid">
                             <label for="email" class="p-col-fixed" style="width:100px">E-mail</label>
                             <div class="p-col">
-                                <p:inputText id="email" type="text"  value="#{empleadoMB.empleado.email}" />
+                                <p:inputText id="email" type="text"  value="#{buscarViewMB.empleadoEditar.email}" />
                             </div>
                         </div>
                         <div class="p-field p-grid">
                             <label for="password" class="p-col-fixed" style="width:100px">Contraseña</label>
                             <div class="p-col">
-                                <p:inputText id="password" type="text"  required="true" label="c2b1234" value="#{empleadoMB.empleado.password}"/>
+                                <p:inputText id="password" type="text"  required="true" label="c2b1234" value="#{buscarViewMB.empleadoEditar.password}"/>
                             </div>
                         </div>
                         <div class="p-field p-grid">
                             <label for="jornada" class="p-col-fixed" style="width:100px">Jornada</label>
                             <div class="p-col">
-                                <p:inputText id="jornada" type="number" required="true"  label="40" value="#{empleadoMB.empleado.jornadaSemanal}"/>
+                                <p:inputText id="jornada" type="number" required="true"  label="40" value="#{buscarViewMB.empleadoEditar.jornadaSemanal}"/>
                             </div>
                         </div>
                         <div class="p-field-checkbox">
-                            <p:selectBooleanCheckbox value="#{empleadoMB.empleado.administrador}" itemLabel="Administrador"/>
+                            <p:selectBooleanCheckbox value="#{buscarViewMB.empleadoEditar.administrador}" itemLabel="Administrador"/>
                         </div>
 
-                        <h:commandButton value="Alta" action="#{empleadoMB.alta()}" />
+                        <h:commandButton value="Alta" action="#{buscarViewMB.modif()}" />
                     </h:form>
                 </div>
             </ui:define>

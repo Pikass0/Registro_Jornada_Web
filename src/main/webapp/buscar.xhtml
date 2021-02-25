@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+
+    </h:head>
+    <h:body>
+
+        <ui:composition template="./WEB-INF/view/plantilla.xhtml">
+
+            <ui:define name="titulo">
+                inicio
+            </ui:define>
+
+            <ui:define name="top">
+                - INICIO
+            </ui:define>
+
+            <ui:define name="content">
+                <h2>Buscar empleado</h2>
+
+                <div class="card">
+                    <h:form id="formBuscar" rendered="true">
+                        <h6>Buscar % para que aparezcan todos</h6>
+                        <h4>Nombre</h4>
+                        <h:inputText value="#{buscarViewMB.empleadoBuscar.nombre}" required="false"/> <br/>
+                        <h:commandButton type="submit" value="Buscar" action="#{buscarViewMB.buscar()}">
+                            <f:ajax event="click" render="formTabla" execute="@form"/> 
+                        </h:commandButton>
+                        <br />
+                    </h:form>
+                    <br />
+                    <!--TODO tabla resultados-->
+                    <h:form id="formTabla" rendered="true">
+                        <p:dataTable id="tablaResultados" var="empleado" value="#{buscarViewMB.empleadosEncontrados}"
+                                     selection="#{buscarViewMB.empleadosSeleccionados}" rowKey="#{empleado.idEmpleado}"
+                                     style="margin-bottom:0" paginator="true" rows="5" editable="true" >
+                            <!--selectionPageOnly="false"-->
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+
+                            <p:ajax event="rowEdit" listener="#{buscarViewMB.onRowEdit}"/>
+                            <p:ajax event="rowEditCancel" listener="#{buscarViewMB.onRowCancel}" />
+
+                            <p:column headerText="Nombre">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{empleado.nombre}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{empleado.nombre}" style="width:100%" label="Nombre"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Apellidos">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{empleado.apellidos}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{empleado.apellidos}" style="width:100%" label="Apellidos"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Alta">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{empleado.activo}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText value="#{empleado.activo}" style="width:100%" label="Alta"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+
+
+                                <p:column headerText="DNI" >
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{empleado.dni}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText value="#{empleado.dni}" style="width:100%" />
+                                        </f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column headerText="E-mail" >
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{empleado.email}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText value="#{empleado.email}" style="width:100%" label="E-mail"/>
+                                        </f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+                                <p:column headerText="Password" >
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{empleado.password}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText value="#{empleado.password}" style="width:100%" label="Password"/>
+                                        </f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column headerText="Admin" >
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{empleado.administrador}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText value="#{empleado.administrador}" style="width:100%" label="Admin"/>
+                                        </f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+
+                                <p:column headerText="Jornada" >
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{empleado.jornadaSemanal}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText value="#{empleado.jornadaSemanal}" style="width:100%" label="Jornada"/>
+                                        </f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                            <p:column style="width:6rem">
+                                <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
+                            </p:column>
+                        </p:dataTable>
+
+                        <h:commandButton   value="Dar de baja" action="#{buscarViewMB.darBaja(false)}">
+                            <f:ajax event="click" render="formTabla" execute="@form"/> 
+                        </h:commandButton>
+                        <h:commandButton  value="Dar de alta" action="#{buscarViewMB.darBaja(true)}">
+                            <f:ajax event="click" render="formTabla" execute="@form"/> 
+                        </h:commandButton>
+                        <h:commandButton   value="Ver/Ocultar extra" action="#{buscarViewMB.switchExtra()}">
+                            <f:ajax event="click" render="formTabla" execute="@form"/> 
+                        </h:commandButton>
+                        <h:commandButton   value="Guardar cambios" action="#{buscarViewMB.modif()}">
+                            <f:ajax event="click" render="formTabla" execute="@form"/> 
+                        </h:commandButton>
+
+                    </h:form>
+                </div>
+            </ui:define>
+
+            <ui:define name="bottom">
+
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>
+

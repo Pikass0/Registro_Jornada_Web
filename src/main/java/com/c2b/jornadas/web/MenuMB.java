@@ -19,9 +19,7 @@ import javax.inject.Named;
 @ViewScoped
 public class MenuMB implements Serializable{
 
-    //para saber la view en la que estoy siempre
-    private String view = "login";
-    private boolean modificar = false;
+
     /**
      * Creates a new instance of MenuMB
      */
@@ -30,22 +28,19 @@ public class MenuMB implements Serializable{
     
     
     public String alta() {
-        view = "alta";
-        modificar = false;
-        return view;
+        
+        return "alta";
 
     }
 
-    public String baja() {
-        view = "baja";
-        return view;
+    public String buscar() {
+        return "buscar";
     }
 
     
-    public void modif() {
-        view = "modif";
-        modificar = true;
-        addMessage("Success", "prueba mensaje");
+    public String modif() {
+
+        return "modif";
     }
     public void horarios() {
         addMessage("Success", "prueba mensaje");
@@ -64,14 +59,6 @@ public class MenuMB implements Serializable{
     public void addMessage(String summary, String detail) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
         FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-
-    public boolean isModificar() {
-        return modificar;
-    }
-
-    public void setModificar(boolean modificar) {
-        this.modificar = modificar;
     }
 
     

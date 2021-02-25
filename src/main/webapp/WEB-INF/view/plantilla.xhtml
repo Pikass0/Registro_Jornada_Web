@@ -36,14 +36,11 @@
                     <p:menu>     
                         <p:submenu label="Empleados">
                             <p:menuitem value="Alta" action="#{menuMB.alta()}" update="messages" icon="fa fa-user-plus"/>
-                            <p:menuitem value="Baja" action="#{menuMB.baja()}" update="messages" icon="fa fa-user-times"/>
-                            <p:menuitem value="Modificar" action="#{menuMB.modif()}" update="messages" icon="fa fa-edit"/>
+                            <p:menuitem value="Buscar" action="#{menuMB.buscar()}" update="messages" icon="fa fa-user-times"/>
                         </p:submenu>
                         <p:submenu label="Ver listado">
                             <p:menuitem value="Horarios" action="#{menuMB.horarios()}" update="messages" ajax="false"
                                         icon="fa fa-clock-o"/>
-                            <p:menuitem value="Empleados" action="#{menuMB.empleados()}" update="messages" ajax="false"
-                                        icon="fa fa-users"/>
                         </p:submenu>    
                         <p:submenu label="Cuenta">
                             <p:menuitem value="Información" action="#{menuMB.info()}" icon="pi pi-home"/>

@@ -30,10 +30,6 @@ public class GestionEmpleadoMB implements Serializable {
     private List<Empleado> listaEmpleados;
     
 
-    //para saber si viene de alta o mod
-    @ManagedProperty(value = "#{menuMB.view}")
-    private String view;
-
     @EJB
     private EmpleadoService servicio;
 
@@ -52,18 +48,10 @@ public class GestionEmpleadoMB implements Serializable {
     }
 
 
-
-
-    public void altaMod() {
+    public void alta() {
         try {
 
-            if (view.equals("modif")) {
-                servicio.modificar(empleado);
-            }
-            else if (view.equals("alta")){
-
-                servicio.alta(empleado);
-            }
+            servicio.alta(empleado);
 
         } catch (EmpleadoException ex) {
             addMessage("error", ex.getMessage());

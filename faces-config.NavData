@@ -2,9 +2,10 @@
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
+        <Node id="editar-empleado.xhtml" x="59" y="159" zoom="true"/>
         <Node id="login.xhtml" x="322" y="391" zoom="true"/>
         <Node id="index.xhtml" x="300" y="190" zoom="true"/>
-        <Node id="baja.xhtml" x="109" y="329" zoom="true"/>
+        <Node id="buscar.xhtml" x="100" y="253" zoom="true"/>
         <Node id="alta.xhtml" x="520" y="131" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>

@@ -77,18 +77,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
         if (e == null) {
             throw new EmpleadoException("No se ha encontrado el empleado");
         }
-        if (!empleado.getNombre().isEmpty()) {
-            e.setNombre(empleado.getNombre());
-            
-        }
-        if (!empleado.getEmail().isEmpty()) {
-            e.setEmail(empleado.getEmail());
-            
-        }
-        if (!empleado.getPassword().isEmpty()) {
-            e.setPassword(empleado.getPassword());
-            
-        }
+        em.merge(empleado);
 
         //los metodos de un ejb hacen commit al final si no hay excepciones
         //COMMIT -> se sincronizan los objetos de em con las tablas de bd
