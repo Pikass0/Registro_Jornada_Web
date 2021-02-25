@@ -46,6 +46,7 @@
                             <p:ajax event="rowEdit" listener="#{buscarViewMB.onRowEdit}"/>
                             <p:ajax event="rowEditCancel" listener="#{buscarViewMB.onRowCancel}" />
 
+
                             <p:column headerText="Nombre">
                                 <p:cellEditor>
                                     <f:facet name="output">
@@ -56,6 +57,8 @@
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
+
+
 
                             <p:column headerText="Apellidos">
                                 <p:cellEditor>
@@ -79,6 +82,8 @@
                                 </p:cellEditor>
                             </p:column>
 
+                            <!--mostrar solo si da al boton de ver mas columnas-->
+                            <c:if test="#{buscarViewMB.extra}">
 
 
                                 <p:column headerText="DNI" >
@@ -136,6 +141,7 @@
                                     </p:cellEditor>
                                 </p:column>
 
+                            </c:if>
                             <p:column style="width:6rem">
                                 <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
                             </p:column>

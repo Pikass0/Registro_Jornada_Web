@@ -40,7 +40,7 @@ public class BuscarViewMB implements Serializable {
 
     private Empleado empleadoEditar;
     private Empleado empleadoBuscar;
-    private boolean extra = true;
+    private boolean extra;
 
     private List<Empleado> empleadosSeleccionados;
     private List<Empleado> empleadosEncontrados;
